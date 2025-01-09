@@ -6,10 +6,9 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Progress } from "@/components/ui/progress"
 import { Habit } from '@/lib/types'
 import { updateHabitInStorage } from '@/lib/localStorage'
-import { format, differenceInDays, isSameDay } from 'date-fns'
-import { parseISO } from "c:/Projects/habitsync/node_modules/date-fns/parseISO"
 import { Trophy, Target, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { differenceInDays, format, isSameDay } from 'date-fns'
 
 interface HabitTrackerProps {
   habit: Habit;
@@ -30,7 +29,7 @@ export function HabitTracker({ habit, onDelete, detailed = false }: HabitTracker
     updateHabitInStorage(updatedHabit)
   }
 
-  const startDate = parseISO(habit.startDate)
+  const startDate = new Date(habit.startDate)
   const daysPassed = differenceInDays(new Date(), startDate)
   const progress = Math.round((completedDays.length / habit.duration) * 100)
   const streak = completedDays.length

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { use } from 'react'
 import { HabitTracker } from '@/components/HabitTracker'
 import { Navigation } from '@/components/Navigation'
 import { Habit } from '@/lib/types'
@@ -9,19 +10,20 @@ import { getHabitsFromStorage, removeHabitFromStorage } from '@/lib/localStorage
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from 'lucide-react'
 
-export default function HabitDetail({ params }: { params: { id: string } }) {
+export default function HabitDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const [habit, setHabit] = useState<Habit | null>(null)
   const router = useRouter()
 
   useEffect(() => {
     const storedHabits = getHabitsFromStorage()
-    const foundHabit = storedHabits.habits.find(h => h.id === params.id)
+    const foundHabit = storedHabits.habits.find(h => h.id === id)
     if (foundHabit) {
       setHabit(foundHabit)
     } else {
       router.push('/')
     }
-  }, [params.id, router])
+  }, [id, router])
 
   const handleDelete = (habitId: string) => {
     removeHabitFromStorage(habitId)
