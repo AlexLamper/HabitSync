@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -46,14 +46,14 @@ export function HabitForm({ onSubmit }: HabitFormProps) {
             <Input
               id="habit-name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e: { target: { value: SetStateAction<string> } }) => setName(e.target.value)}
               required
               placeholder="Enter your habit"
             />
           </div>
           <div className="space-y-2">
             <Label>For how long?</Label>
-            <RadioGroup defaultValue="30" onValueChange={(value) => setDuration(Number(value) as 30 | 60 | 90)}>
+            <RadioGroup defaultValue="30" onValueChange={(value: unknown) => setDuration(Number(value) as 30 | 60 | 90)}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="30" id="30-days" />
                 <Label htmlFor="30-days" className="flex items-center">

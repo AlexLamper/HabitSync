@@ -35,14 +35,14 @@ export function HabitTracker({ habit, onDelete, detailed = false }: HabitTracker
   const streak = completedDays.length
 
   return (
-    <Card className="mb-6">
+    <Card className="mb-6 border border-gray-300">
       <CardHeader>
-        <CardTitle className="flex justify-between items-center">
+        <CardTitle className="flex justify-between items-center text-black">
           <span>{habit.name}</span>
           {progress === 100 && <Trophy className="text-yellow-500" />}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 text-black">
         <Progress value={progress} className="w-full" />
         <div className="flex justify-between items-center">
           <span>Day {daysPassed + 1} of {habit.duration}</span>
@@ -64,8 +64,7 @@ export function HabitTracker({ habit, onDelete, detailed = false }: HabitTracker
               return (
                 <Button
                   key={index}
-                  variant={isCompleted ? "default" : "outline"}
-                  className={`w-10 h-10 ${isToday ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
+                  className={`w-10 h-10 ${isCompleted ? 'bg-primary text-white' : 'bg-transparent text-black border border-gray-300'} ${isToday ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
                   onClick={() => isPast && toggleDay(dateString)}
                   disabled={!isPast}
                 >
@@ -78,19 +77,27 @@ export function HabitTracker({ habit, onDelete, detailed = false }: HabitTracker
       </CardContent>
       <CardFooter className="flex justify-between">
         {detailed ? (
-          <Button onClick={() => toggleDay(new Date().toISOString().split('T')[0])} variant={completedDays.includes(new Date().toISOString().split('T')[0]) ? "default" : "outline"}>
-            {completedDays.includes(new Date().toISOString().split('T')[0]) ? "Completed Today" : "Mark as Complete"}
-          </Button>
+          <Button
+          onClick={() => toggleDay(new Date().toISOString().split('T')[0])}
+          className={`${completedDays.includes(new Date().toISOString().split('T')[0])
+            ? 'bg-primary text-white'
+            : 'bg-transparent text-black hover:text-white'} border border-gray-300`}
+        >
+          {completedDays.includes(new Date().toISOString().split('T')[0])
+            ? "Completed Today"
+            : "Mark as Complete"}
+        </Button>        
         ) : (
           <Link href={`/habit/${habit.id}`} passHref>
-            <Button variant="outline">
+            <Button className="bg-transparent text-black hover:text-white border border-gray-300">
               View Details <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         )}
-        <Button onClick={() => onDelete(habit.id)} variant="destructive">Delete</Button>
+        <Button onClick={() => onDelete(habit.id)} className="bg-red-500 text-white border border-red-500 hover:bg-red-600">
+          Delete
+        </Button>
       </CardFooter>
     </Card>
   )
 }
-

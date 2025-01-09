@@ -37,7 +37,7 @@ export default function HabitDetail({ params }: { params: Promise<{ id: string }
   return (
     <main className="container mx-auto max-w-2xl p-4">
       <Navigation />
-      <Button variant="ghost" onClick={() => router.push('/')} className="mb-4">
+      <Button onClick={() => router.push('/')} className="mb-4 bg-transparent text-black hover:text-white">
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
       </Button>
       <h1 className="text-3xl font-bold mb-6">{habit.name}</h1>
@@ -45,4 +45,3 @@ export default function HabitDetail({ params }: { params: Promise<{ id: string }
     </main>
   )
 }
-
